@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/ivMoviePoster"
+        android:layout_width="150dp"
+        android:layout_height="200dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/material_dynamic_neutral80" />
+
+    <TextView
+        android:id="@+id/tvMovieTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toStartOf="@id/ivMoviePoster"
+        app:layout_constraintBottom_toTopOf="@+id/rbMovieRating"
+        tools:text="Movie Title"
+        tools:textColor="@color/white" />
+
+    <RatingBar
+        android:id="@+id/rbMovieRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.RatingBar.Small"
+        android:numStars="5"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivMoviePoster"
+        app:layout_constraintStart_toStartOf="@id/ivMoviePoster"
+        tools:layout_editor_absoluteX="106dp"
+        tools:rating="3"
+        tools:stepSize="0.5" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
