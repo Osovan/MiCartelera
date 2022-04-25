@@ -10,9 +10,8 @@ class MovieViewHolder(private val binding: MovieItemBinding) : RecyclerView.View
      fun render(movie: Movie) {
           Glide
                .with(binding.root.context)
-               .load("https://image.tmdb.org/t/p/w300/${movie.backdrop_path}")
+               .load("https://image.tmdb.org/t/p/w300/${movie.poster_path}")
                .into(binding.ivMoviePoster)
-          binding.tvMovieTitle.text = movie.title
           val average = movie.vote_average.toFloat()/2
           binding.rbMovieRating.rating = average
      }
