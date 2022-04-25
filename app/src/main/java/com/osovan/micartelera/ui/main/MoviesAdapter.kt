@@ -8,7 +8,7 @@ import com.osovan.micartelera.model.Movie
 
 
 class MoviesAdapter(
-     private val moviesList: List<Movie>,
+     var moviesList: List<Movie>,
      private val onMovieClickListener: (Movie) -> Unit
 ) : RecyclerView.Adapter<MovieViewHolder>() {
 

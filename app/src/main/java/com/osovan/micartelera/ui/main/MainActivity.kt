@@ -1,10 +1,14 @@
 package com.osovan.micartelera.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.osovan.micartelera.R
 import com.osovan.micartelera.databinding.ActivityMainBinding
 import com.osovan.micartelera.model.Movie
+import com.osovan.micartelera.model.MovieDbClient
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,25 +19,25 @@ class MainActivity : AppCompatActivity() {
           binding = ActivityMainBinding.inflate(layoutInflater)
           setContentView(binding.root)
 
-          binding.rvMovies.adapter = MoviesAdapter(
-               listOf(
-                    Movie("pelicula 1", "https://loremflickr.com/320/240?lock=1"),
-                    Movie("pelicula 2", "https://loremflickr.com/320/240?lock=2"),
-                    Movie("pelicula 3", "https://loremflickr.com/320/240?lock=3"),
-                    Movie("pelicula 4", "https://loremflickr.com/320/240?lock=4"),
-                    Movie("pelicula 5", "https://loremflickr.com/320/240?lock=5"),
-                    Movie("pelicula 6", "https://loremflickr.com/320/240?lock=6"),
-                    Movie("pelicula 7", "https://loremflickr.com/320/240?lock=7"),
-                    Movie("pelicula 8", "https://loremflickr.com/320/240?lock=8"),
-                    Movie("pelicula 9", "https://loremflickr.com/320/240?lock=9"),
-                    Movie("pelicula 10", "https://loremflickr.com/320/240?lock=10")
-               ),
-               { movie ->
-                    Toast.makeText(this@MainActivity, movie.title, Toast.LENGTH_SHORT).show()
+          val moviesAdapter = MoviesAdapter(emptyList()) { movie ->
+               Toast.makeText(this@MainActivity, movie.title, Toast.LENGTH_SHORT).show()
+          }
 
+          binding.rvMovies.adapter = moviesAdapter
+
+          thread {
+               val apiKey = getString(R.string.api_key)
+               val popularMovies = MovieDbClient.service.getPopularMovies(apiKey)
+               val body = popularMovies.execute().body()
+
+               runOnUiThread {
+                    if (body != null) {
+                         moviesAdapter.moviesList = body.results
+                         moviesAdapter.notifyDataSetChanged()
+                    }
                }
 
-          )
+          }
      }
 
 }
