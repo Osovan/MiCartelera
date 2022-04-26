@@ -1,43 +1,84 @@
 package com.osovan.micartelera.ui.main
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.location.Geocoder
+import android.location.Location
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.osovan.micartelera.R
 import com.osovan.micartelera.databinding.ActivityMainBinding
-import com.osovan.micartelera.model.Movie
 import com.osovan.micartelera.model.MovieDbClient
-import kotlin.concurrent.thread
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
      private lateinit var binding: ActivityMainBinding
+     private val moviesAdapter = MoviesAdapter(emptyList()) {}
+
+     private lateinit var fusedLocationClient: FusedLocationProviderClient
+     private val requestPermissionLauncher =
+          registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+               requestPopularMovies(isGranted)
+          }
+
 
      override fun onCreate(savedInstanceState: Bundle?) {
           super.onCreate(savedInstanceState)
           binding = ActivityMainBinding.inflate(layoutInflater)
           setContentView(binding.root)
 
-          val moviesAdapter = MoviesAdapter(emptyList()) { movie ->
-               Toast.makeText(this@MainActivity, movie.title, Toast.LENGTH_SHORT).show()
-          }
+          fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
           binding.rvMovies.adapter = moviesAdapter
 
-          thread {
-               val apiKey = getString(R.string.api_key)
-               val popularMovies = MovieDbClient.service.getPopularMovies(apiKey)
-               val body = popularMovies.execute().body()
+          requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
 
-               runOnUiThread {
-                    if (body != null) {
-                         moviesAdapter.moviesList = body.results
-                         moviesAdapter.notifyDataSetChanged()
-                    }
-               }
 
-          }
      }
+
+     @SuppressLint("MissingPermission")
+     private fun requestPopularMovies(isLocationGranted: Boolean) {
+          if (isLocationGranted) {
+               fusedLocationClient.lastLocation.addOnCompleteListener {
+                    doRequestPopularMovies(getRegionFromLocation(it.result))
+               }
+          } else {
+               doRequestPopularMovies("US")
+          }
+
+
+     }
+
+     private fun doRequestPopularMovies(region: String) {
+          lifecycleScope.launch {
+               val apiKey = getString(R.string.api_key)
+               val popularMovies = MovieDbClient.service.getPopularMovies(apiKey, region)
+               moviesAdapter.moviesList = popularMovies.results
+               moviesAdapter.notifyDataSetChanged()
+          }
+
+     }
+
+
+     private fun getRegionFromLocation(location: Location?): String {
+
+          if (location == null) {
+               return "US"
+          }
+
+          val geocoder = Geocoder(this)
+          val result = geocoder.getFromLocation(
+               location.latitude,
+               location.longitude,
+               1
+          )
+          return result.firstOrNull()?.countryCode ?: "US"
+     }
+
 
 }
