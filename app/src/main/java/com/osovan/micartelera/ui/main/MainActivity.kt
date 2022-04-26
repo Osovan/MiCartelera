@@ -2,6 +2,7 @@ package com.osovan.micartelera.ui.main
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
@@ -12,7 +13,9 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.osovan.micartelera.R
 import com.osovan.micartelera.databinding.ActivityMainBinding
+import com.osovan.micartelera.model.Movie
 import com.osovan.micartelera.model.MovieDbClient
+import com.osovan.micartelera.ui.detail.DetailActivity
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
@@ -23,7 +26,7 @@ class MainActivity : AppCompatActivity() {
           const val DEFAULT_REGION = "US"
      }
      private lateinit var binding: ActivityMainBinding
-     private val moviesAdapter = MoviesAdapter(emptyList()) {}
+     private val moviesAdapter = MoviesAdapter(emptyList()) { navigateToDetail(it) }
      private lateinit var fusedLocationClient: FusedLocationProviderClient
      private val requestPermissionLauncher =
           registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
@@ -38,7 +41,15 @@ class MainActivity : AppCompatActivity() {
           fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
           binding.rvMovies.adapter = moviesAdapter
           requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
+
      }
+
+     private fun navigateToDetail(movie: Movie) {
+          val intent = Intent(this,DetailActivity::class.java)
+          intent.putExtra(DetailActivity.EXTRA_MOVIE, movie)
+          startActivity(intent)
+     }
+
 
      private fun requestPopularMovies(isLocationGranted: Boolean) {
           lifecycleScope.launch {
