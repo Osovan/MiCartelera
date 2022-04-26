@@ -8,7 +8,7 @@
     android:padding="1dp"
     android:foreground="?attr/selectableItemBackground">
 
-    <com.osovan.micartelera.core.AspectRadioImageView
+    <com.osovan.micartelera.ui.common.AspectRadioImageView
         android:id="@+id/ivMoviePoster"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

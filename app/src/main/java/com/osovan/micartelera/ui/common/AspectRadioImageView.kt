@@ -1,8 +1,7 @@
-package com.osovan.micartelera.core
+package com.osovan.micartelera.ui.common
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
 import com.osovan.micartelera.R
 

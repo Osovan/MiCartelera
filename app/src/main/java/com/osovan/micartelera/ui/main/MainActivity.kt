@@ -14,18 +14,21 @@ import com.osovan.micartelera.R
 import com.osovan.micartelera.databinding.ActivityMainBinding
 import com.osovan.micartelera.model.MovieDbClient
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
 
 class MainActivity : AppCompatActivity() {
 
+     companion object {
+          const val DEFAULT_REGION = "US"
+     }
      private lateinit var binding: ActivityMainBinding
      private val moviesAdapter = MoviesAdapter(emptyList()) {}
-
      private lateinit var fusedLocationClient: FusedLocationProviderClient
      private val requestPermissionLauncher =
           registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
                requestPopularMovies(isGranted)
           }
-
 
      override fun onCreate(savedInstanceState: Bundle?) {
           super.onCreate(savedInstanceState)
@@ -33,42 +36,35 @@ class MainActivity : AppCompatActivity() {
           setContentView(binding.root)
 
           fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
           binding.rvMovies.adapter = moviesAdapter
-
           requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
-
-
      }
 
-     @SuppressLint("MissingPermission")
      private fun requestPopularMovies(isLocationGranted: Boolean) {
-          if (isLocationGranted) {
-               fusedLocationClient.lastLocation.addOnCompleteListener {
-                    doRequestPopularMovies(getRegionFromLocation(it.result))
-               }
-          } else {
-               doRequestPopularMovies("US")
-          }
-
-
-     }
-
-     private fun doRequestPopularMovies(region: String) {
           lifecycleScope.launch {
                val apiKey = getString(R.string.api_key)
+               val region = getRegion(isLocationGranted)
                val popularMovies = MovieDbClient.service.getPopularMovies(apiKey, region)
                moviesAdapter.moviesList = popularMovies.results
                moviesAdapter.notifyDataSetChanged()
           }
-
      }
 
+     @SuppressLint("MissingPermission")
+     private suspend fun getRegion(isLocationGranted: Boolean): String =
+          suspendCancellableCoroutine { continuation ->
+               if (isLocationGranted) {
+                    fusedLocationClient.lastLocation.addOnCompleteListener {
+                         continuation.resume(getRegionFromLocation(it.result))
+                    }
+               } else {
+                    continuation.resume(DEFAULT_REGION)
+               }
+          }
 
      private fun getRegionFromLocation(location: Location?): String {
-
           if (location == null) {
-               return "US"
+               return DEFAULT_REGION
           }
 
           val geocoder = Geocoder(this)
@@ -77,8 +73,6 @@ class MainActivity : AppCompatActivity() {
                location.longitude,
                1
           )
-          return result.firstOrNull()?.countryCode ?: "US"
+          return result.firstOrNull()?.countryCode ?: DEFAULT_REGION
      }
-
-
 }
