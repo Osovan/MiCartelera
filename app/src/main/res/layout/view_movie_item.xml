@@ -25,7 +25,6 @@
                 android:id="@+id/ivCover"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
                 app:layout_constraintDimensionRatio="H,9:16"
                 app:layout_constraintBottom_toBottomOf="parent"

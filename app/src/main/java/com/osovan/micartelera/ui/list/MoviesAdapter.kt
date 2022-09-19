@@ -31,6 +31,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
           }
 
           holder.binding.mCardView.setOnClickListener {
+               Log.d("Oscar", "movie: ${movie}")
                onMovieClick.onMovieClick(movie)
           }
      }
