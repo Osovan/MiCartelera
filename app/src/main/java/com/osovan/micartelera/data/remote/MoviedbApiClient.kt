@@ -10,7 +10,7 @@ interface MoviedbApiClient {
 
      @GET(POPULAR)
      suspend fun getMovies(
-          @Query("api_key") apiKey: String
-//          @Query("region") region: String
+          @Query("api_key") apiKey: String,
+          @Query("region") region: String
      ): Response<MovieDbResult>
 }

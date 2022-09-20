@@ -18,8 +18,8 @@ class MoviesViewModel @Inject constructor(private val movieRepository: MovieRepo
 
      private val movies = MutableLiveData<MovieDbResult>()
 
-     fun getMovies() = viewModelScope.launch {
-          movieRepository.getMovies().let {
+     fun getMovies(region: String) = viewModelScope.launch {
+          movieRepository.getMovies(region).let {
                if (it.isSuccessful) {
                     movies.value = it.body()
                } else {

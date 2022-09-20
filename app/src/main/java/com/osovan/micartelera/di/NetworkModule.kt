@@ -30,4 +30,5 @@ class NetworkModule {
      @Singleton
      @Named("apiKey")
      fun provideApiKey(app: Application): String = app.getString(R.string.api_key)
+
 }

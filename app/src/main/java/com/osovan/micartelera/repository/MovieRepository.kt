@@ -9,5 +9,5 @@ class MovieRepository @Inject constructor(
      @Named("apiKey") private val apiKey: String
 ) {
 
-     suspend fun getMovies() = movieDbApi.getMovies(apiKey)
+     suspend fun getMovies(region: String) = movieDbApi.getMovies(apiKey, region)
 }
