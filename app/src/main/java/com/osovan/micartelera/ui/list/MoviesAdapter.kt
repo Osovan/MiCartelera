@@ -1,5 +1,6 @@
 package com.osovan.micartelera.ui.list
 
+import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +29,10 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
           holder.binding.apply {
                ivCover.load(INIT_POSTER_PATH + movie.poster_path)
                tvMovieTitle.text = movie.title
+               val averageInt =(10*(movie.vote_average!!)).toInt()
+               progressBar.progress = averageInt
+               tvProgress.text = "$averageInt%"
+
           }
 
           holder.binding.mCardView.setOnClickListener {

@@ -27,24 +27,19 @@ class DetailActivity : AppCompatActivity() {
           binding = ActivityDetailBinding.inflate(layoutInflater)
           setContentView(binding.root)
 
-          setSupportActionBar(binding.toolbar)
+          setSupportActionBar(binding.tbToolbar)
           supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
           getMovieFromIntent()
-
           detailViewModel.getMovie(movie)
+          binding.tbToolbar.title = movie.title
 
           detailViewModel.observeMovie().observe(this) {
-
-               binding.toolbar.title = movie.title
                binding.detailBackdrop.load("https://image.tmdb.org/t/p/w780${movie.backdrop_path}")
-
                bindingDetailInfo(binding.detailInfo, movie)
                binding.detailSummary.text = movie.overview
-
+               binding.rbRatting.rating = movie.vote_average?.toFloat() ?: 0f
           }
-
-
      }
 
      private fun bindingDetailInfo(detailInfo: TextView, movie: Movie) {
@@ -53,8 +48,6 @@ class DetailActivity : AppCompatActivity() {
                appendInfo(R.string.original_title, movie.original_title)
                appendInfo(R.string.release_date, movie.release_date)
                appendInfo(R.string.popularity, movie.popularity.toString())
-               appendInfo(R.string.vote_average, movie.vote_average.toString())
-
           }
      }
 
