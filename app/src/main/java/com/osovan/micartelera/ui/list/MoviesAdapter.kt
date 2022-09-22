@@ -24,7 +24,6 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
 
      override fun onBindViewHolder(holder: ViewHolder, position: Int) {
           val movie = movies[position]
-          Log.d("Oscar", movie.title.toString())
 
           holder.binding.apply {
                ivCover.load(INIT_POSTER_PATH + movie.poster_path)
@@ -36,7 +35,6 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
           }
 
           holder.binding.mCardView.setOnClickListener {
-               Log.d("Oscar", "movie: ${movie}")
                onMovieClick.onMovieClick(movie)
           }
      }

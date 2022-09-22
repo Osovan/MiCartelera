@@ -38,7 +38,6 @@ class MainActivity : AppCompatActivity() {
      private fun requestMovies(isLocationGranted: Boolean) {
           if (isLocationGranted){
                fusedLocationClient.lastLocation.addOnSuccessListener {
-                    Log.d("Oscar", "location: $it")
                     if (it!=null) {
                          getMovies(getLastLocation(it))
                     }else{
@@ -83,7 +82,6 @@ class MainActivity : AppCompatActivity() {
                location.longitude,
                1
           )
-          Log.d("Oscar", "getLastLocation: ${result.firstOrNull()?.countryCode?: DEFAULT_REGION}")
           return result.firstOrNull()?.countryCode ?: DEFAULT_REGION
      }
 
