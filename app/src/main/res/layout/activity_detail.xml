@@ -1,88 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
-        android:layout_height="wrap_content"
+    <ScrollView
         android:layout_width="match_parent"
-        app:layout_scrollFlags="scroll|enterAlways"
-        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
-        android:fitsSystemWindows="true">
-
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:contentScrim="@color/primary"
-            app:statusBarScrim="@color/primary_dark">
-
-            <ImageView
-                android:id="@+id/detailBackdrop"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                app:layout_collapseMode="parallax"
-                tools:srcCompat="@tools:sample/avatars"
-                android:fitsSystemWindows="true"/>
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/tbToolbar"
-                app:title="Title"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize" />
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/detailSummary"
+            <ImageView
+                android:id="@+id/ivDetailBackdrop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                tools:text="@tools:sample/lorem/random" />
+                android:background="@color/primaryColor"
+                android:scaleType="fitStart"
+                tools:srcCompat="@tools:sample/avatars" />
 
-            <TextView
-                android:id="@+id/detailInfo"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <RatingBar
-                android:id="@+id/rbRatting"
-                android:numStars="5"
-                android:stepSize="0.25"
-                android:isIndicator="false"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:theme="@style/RatingBar"
-                />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="16dp"
+                        android:src="@drawable/ic_info" />
+
+                    <TextView
+                        android:id="@+id/tvOverview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        tools:text="@tools:sample/lorem/random" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="16dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="16dp"
+                        android:src="@drawable/ic__thumb_up" />
+
+                    <RatingBar
+                        android:id="@+id/rbRatting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:isIndicator="true"
+                        android:numStars="5"
+                        android:stepSize="0.25"
+                        android:theme="@style/RatingBar" />
+
+                    <TextView
+                        android:id="@+id/tvVotes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="8dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="16dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="16dp"
+                        android:src="@drawable/ic_date" />
+
+                    <TextView
+                        android:id="@+id/tvDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="8dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="16dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="16dp"
+                        android:src="@drawable/ic_extra_data" />
+
+                    <TextView
+                        android:id="@+id/tvMoreInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="8dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
-
+    </ScrollView>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

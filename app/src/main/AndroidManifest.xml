@@ -25,7 +25,6 @@
         </activity>
         <activity
             android:name=".ui.detail.DetailActivity"
-            android:theme="@style/Theme.MiCartelera.NoActionBar"
             android:parentActivityName=".ui.list.MainActivity"
             android:exported="false" />
     </application>

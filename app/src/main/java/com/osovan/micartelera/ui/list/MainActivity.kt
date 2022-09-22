@@ -6,6 +6,7 @@ import android.content.Intent
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -30,17 +31,16 @@ class MainActivity : AppCompatActivity() {
 
      private val requestPermissionLauncher =
           registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-               
                requestMovies(isGranted)
-               
           }
 
      @SuppressLint("MissingPermission")
      private fun requestMovies(isLocationGranted: Boolean) {
           if (isLocationGranted){
-               fusedLocationClient.lastLocation.addOnCompleteListener {
-                    if (it.result!=null) {
-                         getMovies(getLastLocation(it.result))
+               fusedLocationClient.lastLocation.addOnSuccessListener {
+                    Log.d("Oscar", "location: $it")
+                    if (it!=null) {
+                         getMovies(getLastLocation(it))
                     }else{
                          getMovies(DEFAULT_REGION)
                     }
@@ -83,6 +83,7 @@ class MainActivity : AppCompatActivity() {
                location.longitude,
                1
           )
+          Log.d("Oscar", "getLastLocation: ${result.firstOrNull()?.countryCode?: DEFAULT_REGION}")
           return result.firstOrNull()?.countryCode ?: DEFAULT_REGION
      }
 

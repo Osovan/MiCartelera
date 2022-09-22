@@ -17,9 +17,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
 
-     private val detailViewModel : DetailViewModel by viewModels()
+     private val detailViewModel: DetailViewModel by viewModels()
      private lateinit var binding: ActivityDetailBinding
-     private lateinit var  movie: Movie
+     private lateinit var movie: Movie
 
 
      override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,18 +27,22 @@ class DetailActivity : AppCompatActivity() {
           binding = ActivityDetailBinding.inflate(layoutInflater)
           setContentView(binding.root)
 
-          setSupportActionBar(binding.tbToolbar)
-          supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
           getMovieFromIntent()
+          supportActionBar?.setDisplayHomeAsUpEnabled(true)
+          supportActionBar?.title = movie.title
+
+
           detailViewModel.getMovie(movie)
-          binding.tbToolbar.title = movie.title
 
           detailViewModel.observeMovie().observe(this) {
-               binding.detailBackdrop.load("https://image.tmdb.org/t/p/w780${movie.backdrop_path}")
-               bindingDetailInfo(binding.detailInfo, movie)
-               binding.detailSummary.text = movie.overview
-               binding.rbRatting.rating = movie.vote_average?.toFloat() ?: 0f
+               binding.apply {
+                    ivDetailBackdrop.load("https://image.tmdb.org/t/p/w780${movie.backdrop_path}")
+                    tvOverview.text = movie.overview
+                    bindingDetailInfo(tvMoreInfo, movie)
+                    rbRatting.rating = ((movie.vote_average?.times(5))?.div(10))?.toFloat() ?: 0f
+                    tvVotes.text = "(${movie.vote_count} votos)"
+                    tvDate.text = movie.release_date
+               }
           }
      }
 
@@ -46,7 +50,6 @@ class DetailActivity : AppCompatActivity() {
           detailInfo.text = buildSpannedString {
                appendInfo(R.string.original_language, movie.original_language)
                appendInfo(R.string.original_title, movie.original_title)
-               appendInfo(R.string.release_date, movie.release_date)
                appendInfo(R.string.popularity, movie.popularity.toString())
           }
      }
@@ -61,19 +64,8 @@ class DetailActivity : AppCompatActivity() {
      }
 
      private fun getMovieFromIntent() {
-           movie = intent.getParcelableExtra<Movie>(MOVIE_EXTRA)!!
+          movie = intent.getParcelableExtra(MOVIE_EXTRA)!!
      }
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

@@ -2,15 +2,36 @@
     <!-- Base application theme. -->
     <style name="Theme.MiCartelera" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/primary_light</item>
-        <item name="colorPrimaryVariant">@color/primary_dark</item>
+        <item name="colorPrimary">@color/primaryLightColor</item>
+        <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/secondary_light</item>
-        <item name="colorSecondaryVariant">@color/secondary_light</item>
+        <item name="colorSecondary">@color/secondaryLightColor</item>
+        <item name="colorSecondaryVariant">@color/secondaryLightColor</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.MiCartelera.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="RatingBar" parent="Theme.MaterialComponents.DayNight">
+        <item name="ratingBarStyle">@style/Controls.RatingBar</item>
+        <item name="colorControlActivated">@color/yellow</item>
+        <item name="colorControlNormal">@color/orange</item>
+    </style>
+
+    <style name="Controls.RatingBar" parent="Widget.AppCompat.RatingBar.Small">
+        <item name="android:isIndicator">false</item>
+    </style>
+
+    <style name="CircularDeterminateProgressBar">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/circle</item>
     </style>
 </resources>

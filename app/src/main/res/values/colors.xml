@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="primary">#3F51B5</color>
-    <color name="primary_dark">#303F9F</color>
-    <color name="primary_light">#C5CAE9</color>
-    <color name="secondary">#00BCD4</color>
-    <color name="secondary_dark">#0191A3</color>
-    <color name="secondary_light">#20CBE1</color>
-    <color name="primary_text">#212121</color>
-    <color name="secondary_text">#757575</color>
-    <color name="icons">#FFFFFF</color>
+    <color name="primaryColor">#0097a7</color>
+    <color name="primaryLightColor">#56c8d8</color>
+    <color name="primaryDarkColor">#006978</color>
+    <color name="secondaryColor">#d1c4e9</color>
+    <color name="secondaryLightColor">#fff7ff</color>
+    <color name="secondaryDarkColor">#a094b7</color>
+    <color name="primaryTextColor">#000000</color>
+    <color name="secondaryTextColor">#000000</color>
     <color name="divider">#BDBDBD</color>
     <color name="yellow">#FFC107</color>
     <color name="orange">#FF9800</color>
+    <color name="white">#fff</color>
+    <color name="black">#000</color>
+
 </resources>
